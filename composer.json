@@ -1,8 +1,8 @@
 {
-	"requires": {
+	"require": {
 		"php-curl-class/php-curl-class": "2.1.*"
 	},
 	"autoload": {
-		
-	}
+        "psr-4": {"Gumroad\\": "src/"}
+    }
 }

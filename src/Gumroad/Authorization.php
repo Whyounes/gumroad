@@ -1,6 +1,7 @@
 <?php 
 namespace Gumroad;
 
+use \Curl\Curl;
 
 /*
 * 
@@ -22,6 +23,8 @@ class Authorization{
 		$this->client_id = $client_id;
 		$this->redirect_uri = $redirect_uri;
 		$this->scope = $scope;
+
+        $curl = new Curl();
 	}//construct
 
 	public function authorize(){
