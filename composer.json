@@ -1,0 +1,8 @@
+{
+	"requires": {
+		"php-curl-class/php-curl-class": "2.1.*"
+	},
+	"autoload": {
+		
+	}
+}
