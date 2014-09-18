@@ -8,30 +8,46 @@ use \Curl\Curl;
 */
 class Authorization{
 	private $client_id;
+    private $client_secret;
 	private $redirect_uri;
 	private $scope;
 
 	private $authorization_url = "https://gumroad.com/oauth/authorize";
-	
+    private $token_url = "https://gumroad.com/oauth/token";
+	private $curl;
 	
 	/**
 	* @param $client_id 		string Gumroad client id, can be found on the registred app.
 	* @param $redirect_uri 		string Url to send response to.
-	* @param $scropt			string Access level ( edit_products | view_sales | revenue_share )
+	* @param $scrop			    string Access level ( Scope::EDIT_PRODUCTS | Scope::VIEW_SALES | Scope::REVENUE_SHARE )
 	*/
-	function __construct( $client_id, $redirect_uri, $scope = null ){
+	function __construct( $client_id, $client_secret, $redirect_uri, $scope = null ){
 		$this->client_id = $client_id;
+        $this->client_secret = $client_secret;
 		$this->redirect_uri = $redirect_uri;
 		$this->scope = $scope;
 
-        $curl = new Curl();
+        $this->curl = new Curl();
 	}//construct
 
 	public function authorize(){
-		
+		$this->curl->get( $this->authorization_url, [
+            'client_id'         => $this->client_id,
+            'redirect_uri'      => $this->redirect_uri,
+            'scope'             => $this->scope
+        ] );
 	}//authorize
 
+    public function token( $code ){
+        $res = $this->curl->post( $this->token_url, [
+            'client_id'         => $this->client_id,
+            'client_secret'     => $this->client_secret,
+            'redirect_uri'      => $this->redirect_uri,
+            'code'              => $code
+        ] );
 
+        return $res;
+    }//token
 
     /**
      * Gets the value of redirect_uri.
@@ -101,6 +117,30 @@ class Authorization{
     private function setClientId($client_id)
     {
         $this->client_id = $client_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of client_secret.
+     *
+     * @return mixed
+     */
+    public function getClientSecret()
+    {
+        return $this->client_secret;
+    }
+    
+    /**
+     * Sets the value of client_secret.
+     *
+     * @param mixed $client_secret the client  secret 
+     *
+     * @return self
+     */
+    private function _setClientSecret($client_secret)
+    {
+        $this->client_secret = $client_secret;
 
         return $this;
     }
