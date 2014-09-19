@@ -4,13 +4,19 @@ include_once dirname(__FILE__) . '/../vendor/autoload.php';
 
 use Gumroad\Scope;
 use Gumroad\Authorization;
+use Gumroad\Product;
 
 $authorization = new Authorization( 'a5dac9d52c059da70ccf108b46a2108ae2a32b76dae181c6f38ac2e345f84219', 
 							'1ecaa6760e39f22820af00118322831bb7b0335676a84c81098e8dd48093f149', 
 							'http://localhost/callback', Scope::EDIT_PRODUCTS );
 
 //$authorization->authorize();
-$authorization->token('bc065309a54d4eeabf27e582dba1fc4d90727679a05b4d799e228cea3b7c5c92');
+//var_dump( $authorization->token('bc065309a54d4eeabf27e582dba1fc4d90727679a05b4d799e228cea3b7c5c92') );
+
+$product = new Product('4c86db2608811d32d4187ea5ab03411ef3dd17643a71f1f08390d5529b0bae1e');
+echo "<pre>";
+var_dump($product->all());
+
 /*
 object(stdClass)#6 (5) {
   ["access_token"]=>
