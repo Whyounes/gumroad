@@ -1,5 +1,5 @@
 <?php 
-namespace Gumroad;
+namespace Gumroad\API;
 
 use \Curl\Curl;
 

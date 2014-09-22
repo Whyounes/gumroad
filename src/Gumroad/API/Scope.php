@@ -1,5 +1,5 @@
 <?php 
-namespace Gumroad;
+namespace Gumroad\API;
 
 abstract class Scope{
 	const EDIT_PRODUCTS = "edit_products",
