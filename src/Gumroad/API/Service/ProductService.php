@@ -1,36 +1,22 @@
 <?php 
 
-namespace Gumroad\API;
+namespace Gumroad\API\Service;
 
 use \Curl\Curl;
+use Gumroad\API\Product;
 
-class ProductService{
-
-	private $token;
-	private $curl;
-
-
-	private $products_url = "https://api.gumroad.com/v2/products";
-
-
-	public function __construct( $token ){
-		$this->token = $token;
-		$this->curl = new Curl();
+class ProductService extends Service{
+	 
+	public function __construct( ){
+		
 	}//construct
-
-	/*
-		Update the product or insert it as a new one
-	*/
-   	public function save(){
-
-   	}//save
-
-   	/*
-		Insert a new record to database
+	
+   	/**
+	*	Insert a new record to database
    	*/
-
+	
 	public function insert( $data ){
-		$response = $this->curl->post( $this->products_url , [ 
+		$response = $this->curl->post( $this->api_url , [ 
 			'access_token' 				=> $this->token,
 			'name'						=> $data['name'],
 			'url'						=> $data['url'],
@@ -52,12 +38,12 @@ class ProductService{
 		
 		return $response;
 	}//insert
-
-   	/*
-		Update the current 
+	
+   	/**
+	*	Update the current 
    	*/
 	public function update( $data ){
-		$response = $this->curl->put( $this->products_url . '/' . $data['id'], [ 
+		$response = $this->curl->put( $this->api_url . '/' . $data['id'], [ 
 			'access_token' 				=> $this->token,
 			'name'						=> $data['name'],
 			'url'						=> $data['url'],
@@ -79,23 +65,23 @@ class ProductService{
 		
 		return $response;
    	}//update
-
-   	/*
-		Delete a specific product by id
+   	
+   	/**
+	*	Delete a specific product by id
    	*/
    	public function delete( $id ){
-   		$response = $this->curl->delete( $this->products_url . '/' . $id, [ 
+   		$response = $this->curl->delete( $this->api_url . '/' . $id, [ 
 			'access_token' 	=> $this->token
 		]);
 		
 		return $response;
    	}//delete
 
-   	/*
-		Find a specific product by id
+   	/**
+	*	Find a specific product by id
    	*/
    	public function find( $id ){
-   		$response = $this->curl->get( $this->products_url . '/' . $id, [ 
+   		$response = $this->curl->get( $this->api_url . '/' . $id, [ 
 			'access_token' => $this->token
 		]);
 		if( $response->success ){
@@ -107,14 +93,13 @@ class ProductService{
    		else{
    			// Throw error according to status
    		}//else
-
    	}//find
 
-   	/*
-		Get the list of all registred products for a user
+   	/**
+	*	Get the list of all registred products for a user
    	*/
    	public function all(){
-   		$response = $this->curl->get( $this->products_url, [ 
+   		$response = $this->curl->get( $this->api_url, [ 
 			'access_token' => $this->token
 		]);
 
@@ -133,5 +118,27 @@ class ProductService{
    		}//else
 
    	}//all
+
+   	/**
+	*	Enable a product
+   	*/
+	public function enable( $id ){
+		$response = $this->curl->put( $this->api_url . '/' . $id . '/enable', [ 
+			'access_token' => $this->token
+		]);
+
+		return $response;
+	}//enable
+
+	/**
+	*	Disable a product
+   	*/
+	public function disable( $id ){
+		$response = $this->curl->put( $this->api_url . '/' . $id . '/disable', [ 
+			'access_token' => $this->token
+		]);
+		
+		return $response;
+	}//enable
 
 }//class

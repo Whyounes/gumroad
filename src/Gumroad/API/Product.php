@@ -2,10 +2,11 @@
 namespace Gumroad\API;
 
 use \Curl\Curl;
+use Gumroad\API\Service\ProductService;
 
 
-/*
-	Class for managing a single product
+/**
+*	Class for managing a single product
 */
 class Product{
 	public $custom_permalink;
@@ -37,10 +38,12 @@ class Product{
 	public $sales_usd_cents;
 
 	private $productService;
+	private $categoryService;
 
-	public function __construct( ProductService $productService ){
+	public function __construct( ProductService $productService, CategoryService $categoryService ){
 		$this->productService = $productService;
-
+		$this->categoryService = $categoryService;
+		
 		/*		
 		$this->custom_permalink = $data['custom_permalink'];
 		$this->custom_receipt = $data['custom_receipt'];
@@ -72,8 +75,8 @@ class Product{
 		*/
 	}//construct
 
-	/*
-		Fetch an stdClass or an Array to this class
+	/**
+	*	Fetch an stdClass or an Array to this class
 	*/
 	public function fetch( $obj ){
 		if( gettype($obj) === "array" ){
@@ -156,13 +159,17 @@ class Product{
 		Update the product or insert it as a new one
 	*/
    	public function save(){
-
+   		if( isset($this->id) ){
+   			$this->update();
+   		}//if
+   		else{
+   			$this->insert();
+   		}//else
    	}//save
 
-   	/*
-		Insert a new record to database
+   	/**
+	*	Insert a new record to database
    	*/
-
 	public function insert( $data ){
 		if( !$data )
 			$data = [
@@ -184,11 +191,11 @@ class Product{
 				'custom_permalink'			=> isset( $this->custom_permalink ) ? $this->custom_permalink : NULL
 			];
 
-			return $this->productService->insert( $data );
+		return $this->productService->insert( $data );
 	}//insert
 
-   	/*
-		Update the current 
+   	/**
+	*	Update the current 
    	*/
 	public function update( $data ){
 		$data = [
@@ -214,14 +221,43 @@ class Product{
 		return $this->productService->update( $data );
    	}//update
 
-   	/*
-		Delete a specific product by id
+   	/**
+	*	Delete the product
    	*/
-   	public function delete( $id ){
-   		return $this->productService->delete( $id );
+   	public function delete(){
+   		return $this->productService->delete( $$this->id );
    	}//delete
 
-   	public function __tostring(){
+   	/**
+	*	Enable the current product
+   	*/
+   	public function enable(){
+   		return $this->productService->enable( $$this->id );
+   	}//enable
+
+   	/**
+	*	Enable the current product
+   	*/
+   	public function disable(){
+   		return $this->productService->disable( $$this->id );
+   	}//enable
+
+   	/**
+	*	Get the status of the current prosuct
+   	*/
+   	public function isEnabled(){
+   		return $this->published;
+   	}//enable
+
+   	/**
+	* Get the list of categories for the current product
+   	*/
+	public function categories(){
+		$this->categoryService->categories( $this->id );
+	}//categories
+
+
+   	public function __toString(){
    		return $this->id;
    	}//toString
 
