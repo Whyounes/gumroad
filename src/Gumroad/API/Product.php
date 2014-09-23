@@ -2,6 +2,7 @@
 namespace Gumroad\API;
 
 use \Curl\Curl;
+use Gumroad\API\Service\CategoryService;
 use Gumroad\API\Service\ProductService;
 
 
@@ -40,9 +41,9 @@ class Product{
 	private $productService;
 	private $categoryService;
 
-	public function __construct( ProductService $productService, CategoryService $categoryService ){
-		$this->productService = $productService;
-		$this->categoryService = $categoryService;
+	public function __construct(){
+		$this->productService = ProductService::instance();
+		$this->categoryService = CategoryService::instance();
 		
 		/*		
 		$this->custom_permalink = $data['custom_permalink'];
@@ -170,7 +171,7 @@ class Product{
    	/**
 	*	Insert a new record to database
    	*/
-	public function insert( $data ){
+	public function insert( $data = NULL ){
 		if( !$data )
 			$data = [
 				'name'						=> $this->name,
@@ -197,7 +198,7 @@ class Product{
    	/**
 	*	Update the current 
    	*/
-	public function update( $data ){
+	public function update(){
 		$data = [
 			'id'						=> $this->id,
 			'name'						=> $this->name,
@@ -253,7 +254,7 @@ class Product{
 	* Get the list of categories for the current product
    	*/
 	public function categories(){
-		$this->categoryService->categories( $this->id );
+		return $this->categoryService->categories( $this->id );
 	}//categories
 
 

@@ -8,7 +8,7 @@ use Gumroad\API\Product;
 class ProductService extends Service{
 	 
 	public function __construct( ){
-		
+		parent::__construct();
 	}//construct
 	
    	/**

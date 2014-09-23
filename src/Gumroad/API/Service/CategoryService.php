@@ -9,12 +9,12 @@ class CategoryService extends Service{
 	
 	
 	public function __construct( ){
-		
+		parent::__construct();
 	}//construct
 	
 	public function categories( $product_id ){
-		$response = $this->curl->post( $this->api_url . '/' . $id . '/variant_categories', [
-			'token' => $this->token
+		$response = $this->curl->get( $this->api_url . '/' . $product_id . '/variant_categories', [
+			'access_token' => $this->token
 		]);
 
 		if( $response->success ){
