@@ -254,7 +254,7 @@ class Product{
 	* Get the list of categories for the current product
    	*/
 	public function categories(){
-		return $this->categoryService->categories( $this->id );
+		return $this->categoryService->categories( $this );
 	}//categories
 
 

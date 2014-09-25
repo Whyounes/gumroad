@@ -65,7 +65,7 @@ class ProductService extends Service{
 		
 		return $response;
    	}//update
-   	
+
    	/**
 	*	Delete a specific product by id
    	*/

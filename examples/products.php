@@ -13,7 +13,7 @@ use Gumroad\API\Service\ProductService;
 $product = new ProductService();
 
 echo "<pre>";
-var_dump($product->all());
+var_dump($product->all()[0]->categories());
 
 //var_dump($product->find('FRhP1-Wm5DlUPA_E_M7-xw=='));
 

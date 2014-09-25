@@ -13,4 +13,7 @@ $product = new \Gumroad\API\Product();
 $product->id = 'FRhP1-Wm5DlUPA_E_M7-xw==';
 
 echo "<pre>";
-var_dump($product->categories());
+//var_dump($product->categories());
+//$category = new \Gumroad\API\Category( 'Jx9pjqEqmDp1HuqYL_991A==', 'ALOaa', $product );
+$category_service = new \Gumroad\API\Service\CategoryService();
+var_dump($category_service->delete( $product, 'Jx9pjqEqmDp1HuqYL_991A==' ));
