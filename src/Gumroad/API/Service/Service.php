@@ -18,7 +18,7 @@ abstract class Service{
         $this->api_url = "https://api.gumroad.com/v2/products";
 		$this->curl = new Curl;
 	}//construct
-	
+
 	public function getToken(){
 		return $this->token;
 	}//getToken

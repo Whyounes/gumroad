@@ -91,7 +91,7 @@ class ProductService extends Service{
 			return $product;
    		}//if
    		else{
-   			// Throw error according to status
+   			return FALSE;
    		}//else
    	}//find
 

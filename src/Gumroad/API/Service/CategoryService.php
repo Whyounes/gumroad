@@ -68,7 +68,7 @@ class CategoryService extends Service{
             return $category;
         }//if
         else{
-            // Throw error according to status
+            return FALSE;
         }//else
     }//find
 

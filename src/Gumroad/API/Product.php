@@ -9,7 +9,7 @@ use Gumroad\API\Service\ProductService;
 /**
 *	Class for managing a single product
 */
-class Product{
+class Product implements Model{
 	public $custom_permalink;
 	public $custom_receipt;
 	public $custom_summary;

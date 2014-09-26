@@ -4,7 +4,7 @@ namespace Gumroad\API;
 use \Curl\Curl;
 use Gumroad\API\Service\CategoryService;
 
-class Category{
+class Category implements Model{
 
 	public $id;
 	public $title;
@@ -48,11 +48,12 @@ class Category{
     }//save
 
     public function delete(){
-        return $this->categoryService->delete();
+        return $this->categoryService->delete( $this->product, $this->id );
     }//delete
 
     public function __toString(){
-        return $this->id;
+        $str = $this->id;
+        return $str;
     }//toString
 
 }//Category
