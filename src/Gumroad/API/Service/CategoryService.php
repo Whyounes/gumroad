@@ -32,7 +32,7 @@ class CategoryService extends Service{
 	}//categories
 	
 	public function insert( $data ){
-        $response = $this->curl->post( $this->api_url . '/' . $data['product']->id . '/variant_categories', [
+        $response = $this->curl->post( $this->api_url . '/' . $data['product_id'] . '/variant_categories', [
             'access_token' 				=> $this->token,
             'title'						=> $data['title']
         ]);
@@ -41,7 +41,7 @@ class CategoryService extends Service{
     }//insert
 
     public function update( $data ){
-        $response = $this->curl->put( $this->api_url . '/' . $data['product']->id . '/variant_categories/' . $data['id'], [
+        $response = $this->curl->put( $this->api_url . '/' . $data['product_id'] . '/variant_categories/' . $data['id'], [
             'access_token' 				=> $this->token,
             'title'						=> $data['title']
         ]);
@@ -49,16 +49,16 @@ class CategoryService extends Service{
         return $response;
     }//update
 
-    public function delete( $product, $id ){
-        $response = $this->curl->delete( $this->api_url . '/' . $product->id . '/variant_categories/' . $id, [
+    public function delete( $product_id, $category_id ){
+        $response = $this->curl->delete( $this->api_url . '/' . $product_id . '/variant_categories/' . $category_id, [
             'access_token' 	=> $this->token
         ]);
 
         return $response;
     }//delete
 
-    public function find( $product, $id ){
-        $response = $this->curl->get( $this->api_url . '/' . $product->id . '/variant_categories/' . $id, [
+    public function find( $product, $category_id ){
+        $response = $this->curl->get( $this->api_url . '/' . $product->id . '/variant_categories/' . $category_id, [
             'access_token' => $this->token
         ]);
 

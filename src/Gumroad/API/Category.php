@@ -3,6 +3,7 @@ namespace Gumroad\API;
 
 use \Curl\Curl;
 use Gumroad\API\Service\CategoryService;
+use Gumroad\API\Service\VariantService;
 
 class Category implements Model{
 
@@ -11,9 +12,11 @@ class Category implements Model{
     public $product;
 
 	private $categoryService;
+    private $variantService;
 
 	public function __construct( $id, $title, $product ){
 		$this->categoryService = CategoryService::instance();
+        $this->variantService = VariantService::instance();
 
         $this->id = $id;
         $this->title = $title;
@@ -24,7 +27,7 @@ class Category implements Model{
         if( !$data )
             $data = [
                 'title'	        => $this->title,
-                'product'       => $this->product
+                'product_id'       => $this->product->id
             ];
 
         return $this->categoryService->insert( $data );
@@ -34,7 +37,7 @@ class Category implements Model{
         $data = [
             'id'		=> $this->id,
             'title'		=> $this->title,
-            'product'   => $this->product
+            'product_id'   => $this->product->id
         ];
 
         return $this->categoryService->update( $data );
@@ -48,8 +51,12 @@ class Category implements Model{
     }//save
 
     public function delete(){
-        return $this->categoryService->delete( $this->product, $this->id );
+        return $this->categoryService->delete( $this->product->id, $this->id );
     }//delete
+
+    public function variants(){
+        return $this->variantService->variants( $this->product, $this );
+    }//variants
 
     public function __toString(){
         $str = $this->id;
